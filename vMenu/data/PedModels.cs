@@ -17,6 +17,7 @@ namespace vMenuClient.data
             (uint)GetHashKey("a_c_chickenhawk"),
             (uint)GetHashKey("a_c_chimp"),
             (uint)GetHashKey("a_c_chop"),
+            (uint)GetHashKey("a_c_chop_02"),
             (uint)GetHashKey("a_c_cormorant"),
             (uint)GetHashKey("a_c_cow"),
             (uint)GetHashKey("a_c_coyote"),
@@ -29,6 +30,7 @@ namespace vMenuClient.data
             (uint)GetHashKey("a_c_husky"),
             (uint)GetHashKey("a_c_killerwhale"),
             (uint)GetHashKey("a_c_mtlion"),
+            (uint)GetHashKey("a_c_panther"),
             (uint)GetHashKey("a_c_pig"),
             (uint)GetHashKey("a_c_pigeon"),
             (uint)GetHashKey("a_c_poodle"),
@@ -42,6 +44,7 @@ namespace vMenuClient.data
             (uint)GetHashKey("a_c_sharkhammer"),
             (uint)GetHashKey("a_c_sharktiger"),
             (uint)GetHashKey("a_c_shepherd"),
+            (uint)GetHashKey("a_c_stingray"),
             (uint)GetHashKey("a_c_westy")
         };
     }

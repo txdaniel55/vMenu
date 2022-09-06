@@ -49,6 +49,7 @@ namespace vMenuClient
             };
             MenuItem soundHorn = new MenuItem("Sound Horn", "Sounds the horn of the vehicle.");
             MenuItem toggleAlarm = new MenuItem("Toggle Alarm Sound", "Toggles the vehicle alarm sound on or off. This does not set an alarm. It only toggles the current sounding status of the alarm.");
+            MenuCheckboxItem LowerStance = new MenuCheckboxItem("Lower Vehicle Stance", "This will increase or decrease your car suspension. Note this will work only with Los Santos Tuners DLC Cars.", false) { Style = MenuCheckboxItem.CheckboxStyle.Cross };
             MenuCheckboxItem enableBlip = new MenuCheckboxItem("Add Blip For Personal Vehicle", "Enables or disables the blip that gets added when you mark a vehicle as your personal vehicle.", EnableVehicleBlip) { Style = MenuCheckboxItem.CheckboxStyle.Cross };
             MenuCheckboxItem exclusiveDriver = new MenuCheckboxItem("Exclusive Driver", "If enabled, then you will be the only one that can enter the drivers seat. Other players will not be able to drive the car. They can still be passengers.", false) { Style = MenuCheckboxItem.CheckboxStyle.Cross };
             //submenu
@@ -71,6 +72,12 @@ namespace vMenuClient
             if (IsAllowed(Permission.PVToggleLights))
             {
                 menu.AddMenuItem(toggleLights);
+            }
+
+            // Toggle stance
+            if (IsAllowed(Permission.PVToggleStance))
+            {
+                menu.AddMenuItem(LowerStance);
             }
 
             // Kick vehicle passengers
@@ -201,6 +208,28 @@ namespace vMenuClient
                                 // SetVehicleExclusiveDriver, but the current version is broken in C# so we manually execute it.
                                 CitizenFX.Core.Native.Function.Call((CitizenFX.Core.Native.Hash)0x41062318F23ED854, CurrentPersonalVehicle, false);
                                 SetVehicleExclusiveDriver_2(CurrentPersonalVehicle.Handle, 0, 1);
+                            }
+                        }
+                        else
+                        {
+                            item.Checked = !_checked;
+                            Notify.Error("You currently can't control this vehicle. Is someone else currently driving your car? Please try again after making sure other players are not controlling your vehicle.");
+                        }
+                    }
+                }
+                else if (item == LowerStance)
+                {
+                    if (CurrentPersonalVehicle != null && CurrentPersonalVehicle.Exists())
+                    {
+                        if (NetworkRequestControlOfEntity(CurrentPersonalVehicle.Handle))
+                        {
+                            if (_checked)
+                            {
+                                SetReduceDriftVehicleSuspension(CurrentPersonalVehicle.Handle, true);
+                            }
+                            else
+                            {
+                                SetReduceDriftVehicleSuspension(CurrentPersonalVehicle.Handle, false);
                             }
                         }
                         else
